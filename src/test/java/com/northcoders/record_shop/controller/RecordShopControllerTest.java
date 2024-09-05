@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -67,7 +68,8 @@ class RecordShopControllerTest {
 
     @Test
     public void testGetAlbumByIdReturnsAlbum() throws Exception{
-        Optional<Album> album = Optional.of(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+        Optional<Album> album = Optional.of(new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10));
 
         when(mockRecordShopService.getAlbumById(1L)).thenReturn(album);
 
@@ -75,5 +77,21 @@ class RecordShopControllerTest {
                 MockMvcRequestBuilders.get("/api/v1/album/1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Avenged Sevenfold"));
+    }
+
+    @Test
+    public void testInsertAlbum() throws Exception{
+        Album album = new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        when(mockRecordShopService.insertAlbum(album)).thenReturn(album);
+
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.post("/api/v1/album")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(album)))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Avenged Sevenfold"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value("METAL"));
     }
 }
