@@ -94,4 +94,19 @@ class RecordShopControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Avenged Sevenfold"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value("METAL"));
     }
+
+    @Test
+    public void testUpdateAlbumById() throws Exception{
+        Album album = new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        when(mockRecordShopService.updateAlbumById(album, 1L)).thenReturn(album);
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.put("/api/v1/album/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(album)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Avenged Sevenfold"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value("METAL"));
+    }
 }
