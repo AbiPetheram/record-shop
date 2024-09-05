@@ -114,9 +114,19 @@ class RecordShopControllerTest {
     public void testDeleteAlbumByIdValidId() throws Exception{
         when(mockRecordShopService.deleteAlbumById(1L)).thenReturn(true);
         this.mockMvcController.perform(
-                MockMvcRequestBuilders.delete("/api/v1/album/1")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        MockMvcRequestBuilders.delete("/api/v1/album/1")
+                                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("Album has been successfully deleted!"));
+    }
+
+    @Test
+    public void testDeleteAlbumByIdInvalidId() throws Exception{
+        when(mockRecordShopService.deleteAlbumById(1L)).thenReturn(false);
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.delete("/api/v1/album/1")
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string("Album not found! Nothing deleted."));
     }
 }
