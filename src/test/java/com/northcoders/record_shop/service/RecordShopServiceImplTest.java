@@ -61,4 +61,22 @@ class RecordShopServiceImplTest {
         Album actualResult = recordShopService.insertAlbum(album);
         assertThat(actualResult).isEqualTo(album);
     }
+
+    @Test
+    public void testUpdateAlbum(){
+        Album album = new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        when(mockRecordShopRepository.existsById(1L)).thenReturn(true);
+        when(mockRecordShopRepository.save(album)).thenReturn(album);
+        Album actualResult = recordShopService.updateAlbumById(album, 1L);
+        assertThat(actualResult).isEqualTo(album);
+    }
+
+    @Test
+    public void testUpdateAlbumWithInvalidId(){
+        Album album = new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        when(mockRecordShopRepository.save(album)).thenReturn(album);
+        assertThrows(RuntimeException.class,
+                ()-> recordShopService.updateAlbumById(album, 1L)
+        );
+    }
 }
