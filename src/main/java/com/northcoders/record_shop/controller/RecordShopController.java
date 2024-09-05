@@ -50,4 +50,13 @@ public class RecordShopController {
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAlbumById(@PathVariable Long id){
+        if(!recordShopService.deleteAlbumById(id)){
+            return new ResponseEntity<>("Album not found! Nothing deleted.", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("Album has been successfully deleted!", HttpStatus.OK);
+        }
+    }
 }
