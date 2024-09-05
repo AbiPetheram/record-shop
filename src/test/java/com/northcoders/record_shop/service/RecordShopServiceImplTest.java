@@ -90,4 +90,11 @@ class RecordShopServiceImplTest {
         boolean result = recordShopService.deleteAlbumById(1L);
         assertThat(result).isTrue();
     }
+
+    @Test
+    public void testDeleteAlbumByIdInvalidId(){
+        when(mockRecordShopRepository.existsById(1L)).thenReturn(false);
+        boolean result = recordShopService.deleteAlbumById(1L);
+        assertThat(result).isFalse();
+    }
 }
