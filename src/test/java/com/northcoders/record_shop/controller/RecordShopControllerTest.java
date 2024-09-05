@@ -109,4 +109,14 @@ class RecordShopControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Avenged Sevenfold"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value("METAL"));
     }
+
+    @Test
+    public void testDeleteAlbumByIdValidId() throws Exception{
+        when(mockRecordShopService.deleteAlbumById(1L)).thenReturn(true);
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.delete("/api/v1/album/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("Album has been successfully deleted!"));
+    }
 }
