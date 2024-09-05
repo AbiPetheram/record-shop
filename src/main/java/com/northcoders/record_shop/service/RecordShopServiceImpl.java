@@ -31,4 +31,13 @@ public class RecordShopServiceImpl implements RecordShopService{
     public Album insertAlbum(Album album) {
         return recordShopRepository.save(album);
     }
+
+    @Override
+    public Album updateAlbumById(Album album, Long id) {
+        if(recordShopRepository.existsById(id)){
+            return recordShopRepository.save(album);
+        } else {
+            throw new RuntimeException("No book exists with that ID");
+        }
+    }
 }
