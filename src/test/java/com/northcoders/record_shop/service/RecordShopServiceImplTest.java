@@ -53,4 +53,12 @@ class RecordShopServiceImplTest {
 
         assertThat(actualResult).isEqualTo(album);
     }
+
+    @Test
+    public void testAddAlbumReturnsAlbum(){
+        Album album = new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        when(mockRecordShopRepository.save(album)).thenReturn(album);
+        Album actualResult = recordShopService.insertAlbum(album);
+        assertThat(actualResult).isEqualTo(album);
+    }
 }
