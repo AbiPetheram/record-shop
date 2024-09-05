@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -62,5 +63,17 @@ class RecordShopControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].albumName").value("The Colour And The Shape"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(3))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2].albumName").value("Mansion"));
+    }
+
+    @Test
+    public void testGetAlbumByIdReturnsAlbum() throws Exception{
+        Optional<Album> album = Optional.of(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+
+        when(mockRecordShopService.getAlbumById(1L)).thenReturn(album);
+
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.get("/api/v1/album/1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.albumName").value("Avenged Sevenfold"));
     }
 }
