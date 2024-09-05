@@ -39,4 +39,15 @@ public class RecordShopController {
         Album returnedAlbum = recordShopService.insertAlbum(album);
         return new ResponseEntity<>(returnedAlbum, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Album> updateAlbumById(@PathVariable Long id, @RequestBody Album album){
+        try{
+            Album returnedAlbum = recordShopService.updateAlbumById(album, id);
+            return new ResponseEntity<>(returnedAlbum, HttpStatus.OK);
+        } catch (RuntimeException e){
+           System.err.println(e.getMessage());
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
