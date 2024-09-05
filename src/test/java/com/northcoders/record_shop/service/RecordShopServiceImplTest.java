@@ -1,7 +1,44 @@
 package com.northcoders.record_shop.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.northcoders.record_shop.repository.RecordShopRepository;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import com.northcoders.record_shop.model.Album;
+import com.northcoders.record_shop.model.Genre;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@DataJpaTest
 class RecordShopServiceImplTest {
 
+    @Mock
+    private RecordShopRepository mockRecordShopRepository;
+
+    @InjectMocks
+    private RecordShopServiceImpl recordShopService;
+
+    @Test
+    public void testGetAllAlbumsReturnsListOfAlbums(){
+        List<Album> albums = new ArrayList<>();
+        albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+        albums.add(new Album(2L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
+        albums.add(new Album(3L, "The Colour And The Shape", "Foo Fighters", 1997, Genre.ROCK, 10));
+        albums.add(new Album(3L, "Mansion", "NF", 2015, Genre.RAP, 10));
+        albums.add(new Album(3L, "At Folsom Prison", "Johnny Cash", 1968, Genre.COUNTRY, 10));
+
+        when(mockRecordShopRepository.findAll()).thenReturn(albums);
+
+        List<Album> actualResult = recordShopService.getAllAlbums();
+
+        assertThat(actualResult).hasSize(5);
+        assertThat(actualResult).isEqualTo(albums);
+    }
 }
