@@ -17,4 +17,7 @@ public class Album {
 
     @Column
     Genre genre;
+
+    @Column
+    int stock;
 }
