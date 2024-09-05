@@ -1,13 +1,21 @@
 package com.northcoders.record_shop.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
-    long id;
+    Long id;
 
     @Column
     String albumName;
@@ -24,15 +32,4 @@ public class Album {
     @Column
     int stock;
 
-    public Album() {
-    }
-
-    public Album(long id, String albumName, String artistName, int releaseYear, Genre genre, int stock) {
-        this.id = id;
-        this.albumName = albumName;
-        this.artistName = artistName;
-        this.releaseYear = releaseYear;
-        this.genre = genre;
-        this.stock = stock;
-    }
 }
