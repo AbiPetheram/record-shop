@@ -31,8 +31,8 @@ class RecordShopServiceImplTest {
         albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
         albums.add(new Album(2L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
         albums.add(new Album(3L, "The Colour And The Shape", "Foo Fighters", 1997, Genre.ROCK, 10));
-        albums.add(new Album(3L, "Mansion", "NF", 2015, Genre.RAP, 10));
-        albums.add(new Album(3L, "At Folsom Prison", "Johnny Cash", 1968, Genre.COUNTRY, 10));
+        albums.add(new Album(4L, "Mansion", "NF", 2015, Genre.RAP, 10));
+        albums.add(new Album(5L, "At Folsom Prison", "Johnny Cash", 1968, Genre.COUNTRY, 10));
 
         when(mockRecordShopRepository.findAll()).thenReturn(albums);
 
