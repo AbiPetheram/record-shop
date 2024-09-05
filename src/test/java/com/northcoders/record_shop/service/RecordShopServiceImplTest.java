@@ -11,6 +11,7 @@ import com.northcoders.record_shop.model.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -40,5 +41,16 @@ class RecordShopServiceImplTest {
 
         assertThat(actualResult).hasSize(5);
         assertThat(actualResult).isEqualTo(albums);
+    }
+
+    @Test
+    public void testGetAlbumByIdReturnsAlbum(){
+        Optional<Album> album = Optional.of(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+
+        when(mockRecordShopRepository.findById(1L)).thenReturn(album);
+
+        List<Album> actualResult = recordShopService.getAlbumById();
+
+        assertThat(actualResult).isEqualTo(album);
     }
 }
