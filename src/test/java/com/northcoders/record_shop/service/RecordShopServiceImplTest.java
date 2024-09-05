@@ -49,7 +49,7 @@ class RecordShopServiceImplTest {
 
         when(mockRecordShopRepository.findById(1L)).thenReturn(album);
 
-        List<Album> actualResult = recordShopService.getAlbumById();
+        Optional<Album> actualResult = recordShopService.getAlbumById(1L);
 
         assertThat(actualResult).isEqualTo(album);
     }
