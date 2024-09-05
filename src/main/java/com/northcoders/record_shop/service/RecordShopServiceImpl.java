@@ -41,4 +41,13 @@ public class RecordShopServiceImpl implements RecordShopService{
             throw new RuntimeException("No book exists with that ID");
         }
     }
+
+    @Override
+    public boolean deleteAlbumById(Long id) {
+        if(!recordShopRepository.existsById(id)){
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

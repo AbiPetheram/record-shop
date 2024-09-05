@@ -10,4 +10,5 @@ public interface RecordShopService {
     Optional<Album> getAlbumById(Long id);
     Album insertAlbum(Album album);
     Album updateAlbumById(Album album, Long id);
+    boolean deleteAlbumById(Long id);
 }
