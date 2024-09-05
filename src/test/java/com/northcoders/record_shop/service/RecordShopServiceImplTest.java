@@ -45,7 +45,8 @@ class RecordShopServiceImplTest {
 
     @Test
     public void testGetAlbumByIdReturnsAlbum(){
-        Optional<Album> album = Optional.of(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+        Optional<Album> album = Optional.of(new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10));
 
         when(mockRecordShopRepository.findById(1L)).thenReturn(album);
 
@@ -56,7 +57,8 @@ class RecordShopServiceImplTest {
 
     @Test
     public void testAddAlbumReturnsAlbum(){
-        Album album = new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        Album album = new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10);
         when(mockRecordShopRepository.save(album)).thenReturn(album);
         Album actualResult = recordShopService.insertAlbum(album);
         assertThat(actualResult).isEqualTo(album);
@@ -64,7 +66,8 @@ class RecordShopServiceImplTest {
 
     @Test
     public void testUpdateAlbum(){
-        Album album = new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        Album album = new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10);
         when(mockRecordShopRepository.existsById(1L)).thenReturn(true);
         when(mockRecordShopRepository.save(album)).thenReturn(album);
         Album actualResult = recordShopService.updateAlbumById(album, 1L);
@@ -73,10 +76,20 @@ class RecordShopServiceImplTest {
 
     @Test
     public void testUpdateAlbumWithInvalidId(){
-        Album album = new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        Album album = new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10);
         when(mockRecordShopRepository.save(album)).thenReturn(album);
         assertThrows(RuntimeException.class,
                 ()-> recordShopService.updateAlbumById(album, 1L)
         );
+    }
+
+    @Test
+    public void testDeleteAlbumById(){
+        Album album = new Album(1L, "Avenged Sevenfold",
+                "Avenged Sevenfold", 2007, Genre.METAL, 10);
+        when(mockRecordShopRepository.existsById(1L)).thenReturn(true);
+        boolean result = recordShopService.deleteAlbumById(1L);
+        assertThat(result).isTrue();
     }
 }
