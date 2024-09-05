@@ -10,6 +10,9 @@ public class Album {
     long id;
 
     @Column
+    String albumName;
+
+    @Column
     String artistName;
 
     @Column
@@ -20,4 +23,16 @@ public class Album {
 
     @Column
     int stock;
+
+    public Album() {
+    }
+
+    public Album(long id, String albumName, String artistName, int releaseYear, Genre genre, int stock) {
+        this.id = id;
+        this.albumName = albumName;
+        this.artistName = artistName;
+        this.releaseYear = releaseYear;
+        this.genre = genre;
+        this.stock = stock;
+    }
 }
