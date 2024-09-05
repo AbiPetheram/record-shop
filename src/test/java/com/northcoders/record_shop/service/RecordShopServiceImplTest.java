@@ -86,8 +86,6 @@ class RecordShopServiceImplTest {
 
     @Test
     public void testDeleteAlbumById(){
-        Album album = new Album(1L, "Avenged Sevenfold",
-                "Avenged Sevenfold", 2007, Genre.METAL, 10);
         when(mockRecordShopRepository.existsById(1L)).thenReturn(true);
         boolean result = recordShopService.deleteAlbumById(1L);
         assertThat(result).isTrue();
