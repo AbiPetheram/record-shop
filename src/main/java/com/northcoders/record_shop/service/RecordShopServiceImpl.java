@@ -47,6 +47,7 @@ public class RecordShopServiceImpl implements RecordShopService{
         if(!recordShopRepository.existsById(id)){
             return false;
         } else {
+            recordShopRepository.deleteById(id);
             return true;
         }
     }
