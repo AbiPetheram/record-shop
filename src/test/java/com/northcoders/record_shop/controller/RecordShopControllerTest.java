@@ -129,4 +129,24 @@ class RecordShopControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().string("Album not found! Nothing deleted."));
     }
+
+    @Test
+    public void testGetAllAlbumsByArtistReturnsAlbums() throws Exception{
+        List<Album> albums = new ArrayList<>();
+        albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+        albums.add(new Album(2L, "Life Is But a Dream...", "Avenged Sevenfold", 2023, Genre.METAL, 10));
+        albums.add(new Album(3L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
+
+        when(mockRecordShopService.getAllAlbumsByArtist("Avenged+Sevenfold")).thenReturn(albums);
+
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.get("/api/v1/album?artist=Avenged+Sevenfold"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].albumName").value("Avenged Sevenfold"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].albumName").value("Life Is But a Dream..."))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(3))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].albumName").value("Nightmare"));
+    }
 }
