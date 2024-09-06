@@ -51,4 +51,11 @@ public class RecordShopServiceImpl implements RecordShopService{
             return true;
         }
     }
+
+    @Override
+    public List<Album> getAllAlbumsByArtist(String artist) {
+        List<Album> albums = new ArrayList<>();
+        recordShopRepository.findAllAlbumsByArtistName(artist).forEach(albums::add);
+        return albums;
+    }
 }
