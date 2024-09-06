@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,13 @@ public class RecordShopController {
     RecordShopService recordShopService;
 
     @GetMapping
-    public ResponseEntity<List<Album>> getAllAlbums(){
-        List<Album> albums = recordShopService.getAllAlbums();
+    public ResponseEntity<List<Album>> getAllAlbums(@RequestParam(required = false) String artist){
+        List<Album> albums = new ArrayList<>();
+        if(artist != null){
+            albums = recordShopService.getAllAlbumsByArtist(artist);
+        } else{
+            albums = recordShopService.getAllAlbums();
+        }
         return new ResponseEntity<>(albums, HttpStatus.OK);
     }
 
