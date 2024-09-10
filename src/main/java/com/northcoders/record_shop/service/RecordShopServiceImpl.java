@@ -3,6 +3,7 @@ package com.northcoders.record_shop.service;
 import com.northcoders.record_shop.model.Album;
 import com.northcoders.record_shop.repository.RecordShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,12 +19,14 @@ public class RecordShopServiceImpl implements RecordShopService{
     @Override
     public List<Album> getAllAlbums() {
         List<Album> albums = new ArrayList<>();
+        System.out.println("Chached getallalbums");
         recordShopRepository.findAll().forEach(albums::add);
         return albums;
     }
 
     @Override
     public Optional<Album> getAlbumById(Long id) {
+        System.out.println("Chached getalbumbyid");
         return recordShopRepository.findById(id);
     }
 

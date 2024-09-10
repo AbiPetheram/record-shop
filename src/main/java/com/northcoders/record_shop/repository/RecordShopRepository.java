@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface RecordShopRepository extends CrudRepository<Album, Long>, JpaSpecificationExecutor<Album> {
     List<Album> findAllAlbumsByArtistName(String artist);
-    List<Album> findAllAlbumsByGenre(String genre);
-    List<Album> findAllAlbumsByReleaseYear(String year);
+//    List<Album> findAllAlbumsByGenre(String genre);
+//    List<Album> findAllAlbumsByReleaseYear(String year);
 }
