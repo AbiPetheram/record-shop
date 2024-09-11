@@ -27,7 +27,7 @@ class RecordShopServiceImplTest {
     private RecordShopServiceImpl recordShopService;
 
     @Test
-    public void testGetAllAlbumsReturnsListOfAlbums(){
+    public void testGetAllAlbums(){
         List<Album> albums = new ArrayList<>();
         albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
         albums.add(new Album(2L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
@@ -35,9 +35,9 @@ class RecordShopServiceImplTest {
         albums.add(new Album(4L, "Mansion", "NF", 2015, Genre.RAP, 10));
         albums.add(new Album(5L, "At Folsom Prison", "Johnny Cash", 1968, Genre.COUNTRY, 10));
 
-        when(mockRecordShopRepository.findAll()).thenReturn(albums);
+        when(mockRecordShopRepository.findAll(Mockito.any(Specification.class))).thenReturn(albums);
 
-        List<Album> actualResult = recordShopService.getAllAlbums();
+        List<Album> actualResult = recordShopService.getAllAlbums(null, null, null);
 
         assertThat(actualResult).hasSize(5);
         assertThat(actualResult).isEqualTo(albums);
