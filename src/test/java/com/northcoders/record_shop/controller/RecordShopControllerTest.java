@@ -53,10 +53,10 @@ class RecordShopControllerTest {
         albums.add(new Album(3L, "Mansion", "NF", 2015, Genre.RAP, 10));
 
 
-        when(mockRecordShopService.getAllAlbums()).thenReturn(albums);
+        when(mockRecordShopService.getAllAlbums(null, null, null)).thenReturn(albums);
 
         this.mockMvcController.perform(
-                MockMvcRequestBuilders.get("/api/v1/album/"))
+                MockMvcRequestBuilders.get("/api/v1/album"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].albumName").value("Avenged Sevenfold"))
@@ -64,6 +64,26 @@ class RecordShopControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].albumName").value("The Colour And The Shape"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(3))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2].albumName").value("Mansion"));
+    }
+
+    @Test
+    public void testGetAllAlbumsByArtist() throws Exception{
+        List<Album> albums = new ArrayList<>();
+        albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+        albums.add(new Album(2L, "Life Is But a Dream...", "Avenged Sevenfold", 2023, Genre.METAL, 10));
+        albums.add(new Album(3L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
+
+        when(mockRecordShopService.getAllAlbums("Avenged+Sevenfold", null, null)).thenReturn(albums);
+
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.get("/api/v1/album?artist=Avenged+Sevenfold"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].albumName").value("Avenged Sevenfold"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].albumName").value("Life Is But a Dream..."))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(3))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].albumName").value("Nightmare"));
     }
 
     @Test
