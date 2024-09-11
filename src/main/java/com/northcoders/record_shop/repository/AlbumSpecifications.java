@@ -1,6 +1,7 @@
 package com.northcoders.record_shop.repository;
 
 import com.northcoders.record_shop.model.Album;
+import com.northcoders.record_shop.model.Genre;
 import org.springframework.data.jpa.domain.Specification;
 
 public class AlbumSpecifications {
