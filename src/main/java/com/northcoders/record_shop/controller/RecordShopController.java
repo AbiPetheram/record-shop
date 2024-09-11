@@ -22,7 +22,7 @@ public class RecordShopController {
     RecordShopService recordShopService;
 
     @GetMapping
-    @Cacheable("albumChache")
+    @Cacheable("getAllAlbumCache")
     public ResponseEntity<List<Album>> getAllAlbums(@RequestParam(required = false) String artist){
         List<Album> albums = new ArrayList<>();
         if(artist != null){
@@ -34,7 +34,7 @@ public class RecordShopController {
     }
 
     @GetMapping("/{id}")
-    @Cacheable("albumChache")
+    @Cacheable("getAlbumCache")
     public ResponseEntity<Album> getAlbumById(@PathVariable Long id){
         Optional<Album> album = recordShopService.getAlbumById(id);
         if(album.isEmpty()){
@@ -45,14 +45,14 @@ public class RecordShopController {
     }
 
     @PostMapping
-    @CacheEvict(cacheNames = "albumChache", allEntries = true)
+    @CacheEvict(cacheNames = {"getAllAlbumCache", "getAlbumCache"}, allEntries = true)
     public ResponseEntity<Album> insertAlbum(@RequestBody Album album){
         Album returnedAlbum = recordShopService.insertAlbum(album);
         return new ResponseEntity<>(returnedAlbum, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    @CacheEvict(cacheNames = "albumChache", allEntries = true)
+    @CacheEvict(cacheNames = {"getAllAlbumCache", "getAlbumCache"}, allEntries = true)
     public ResponseEntity<Album> updateAlbumById(@PathVariable Long id, @RequestBody Album album){
         try{
             Album returnedAlbum = recordShopService.updateAlbumById(album, id);
@@ -64,7 +64,7 @@ public class RecordShopController {
     }
 
     @DeleteMapping("/{id}")
-    @CacheEvict(cacheNames = "albumChache", allEntries = true)
+    @CacheEvict(cacheNames = {"getAllAlbumCache", "getAlbumCache"}, allEntries = true)
     public ResponseEntity<String> deleteAlbumById(@PathVariable Long id){
         if(!recordShopService.deleteAlbumById(id)){
             return new ResponseEntity<>("Album not found! Nothing deleted.", HttpStatus.BAD_REQUEST);
