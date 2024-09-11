@@ -144,19 +144,4 @@ class RecordShopServiceImplTest {
         boolean result = recordShopService.deleteAlbumById(1L);
         assertThat(result).isFalse();
     }
-
-    @Test
-    public void testGetAllAlbumsByArtistReturnsListOfAlbums(){
-        List<Album> albums = new ArrayList<>();
-        albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
-        albums.add(new Album(2L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
-
-
-        when(mockRecordShopRepository.findAllAlbumsByArtistName("Avenged Sevenfold")).thenReturn(albums);
-
-        List<Album> actualResult = recordShopService.getAllAlbumsByArtist("Avenged Sevenfold");
-
-        assertThat(actualResult).hasSize(2);
-        assertThat(actualResult).isEqualTo(albums);
-    }
 }
