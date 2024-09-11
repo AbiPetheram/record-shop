@@ -1,9 +1,12 @@
 package com.northcoders.record_shop.service;
 
 import com.northcoders.record_shop.model.Album;
+import com.northcoders.record_shop.model.Genre;
+import com.northcoders.record_shop.repository.AlbumSpecifications;
 import com.northcoders.record_shop.repository.RecordShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +20,12 @@ public class RecordShopServiceImpl implements RecordShopService{
     RecordShopRepository recordShopRepository;
 
     @Override
-    public List<Album> getAllAlbums() {
-        List<Album> albums = new ArrayList<>();
-        recordShopRepository.findAll().forEach(albums::add);
-        return albums;
+    public List<Album> getAllAlbums(String artist, Genre genre, Integer year) {
+        Specification<Album> spec = Specification
+                .where(AlbumSpecifications.hasArtist(artist))
+                .and(AlbumSpecifications.hasGenre(genre))
+                .and(AlbumSpecifications.hasYear(year));
+        return recordShopRepository.findAll(spec);
     }
 
     @Override
