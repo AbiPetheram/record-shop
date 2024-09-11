@@ -107,6 +107,20 @@ class RecordShopControllerTest {
     }
 
     @Test
+    public void testGetAllAlbumsByYear() throws Exception{
+        List<Album> albums = new ArrayList<>();
+        albums.add(new Album(2L, "Life Is But a Dream...", "Avenged Sevenfold", 2023, Genre.METAL, 10));
+
+        when(mockRecordShopService.getAllAlbums(null, null, 2023)).thenReturn(albums);
+
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.get("/api/v1/album?year=2023"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].albumName").value("Life Is But a Dream..."));
+    }
+
+    @Test
     public void testGetAlbumByIdReturnsAlbum() throws Exception{
         Optional<Album> album = Optional.of(new Album(1L, "Avenged Sevenfold",
                 "Avenged Sevenfold", 2007, Genre.METAL, 10));
