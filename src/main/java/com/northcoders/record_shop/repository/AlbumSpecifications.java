@@ -9,13 +9,13 @@ public class AlbumSpecifications {
                 artist == null ? null : criteriaBuilder.like(root.get("artistName"), "%" + artist + "%"));
     }
 
-    public static Specification<Album> hasGenre(String genre){
+    public static Specification<Album> hasGenre(Genre genre){
         return ((root, query, criteriaBuilder) ->
-                genre == null ? null : criteriaBuilder.like(root.get("genre"), "%" + genre + "%"));
+                genre == null ? null : criteriaBuilder.equal(root.get("genre"), genre));
     }
 
-    public static Specification<Album> hasYear(String year){
+    public static Specification<Album> hasYear(Integer year){
         return ((root, query, criteriaBuilder) ->
-                year == null ? null : criteriaBuilder.like(root.get("releaseYear"), "%" + year + "%"));
+                year == null ? null : criteriaBuilder.equal(root.get("releaseYear"), year));
     }
 }
