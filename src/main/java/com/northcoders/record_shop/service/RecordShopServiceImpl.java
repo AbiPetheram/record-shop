@@ -19,14 +19,12 @@ public class RecordShopServiceImpl implements RecordShopService{
     @Override
     public List<Album> getAllAlbums() {
         List<Album> albums = new ArrayList<>();
-        System.out.println("Chached getallalbums");
         recordShopRepository.findAll().forEach(albums::add);
         return albums;
     }
 
     @Override
     public Optional<Album> getAlbumById(Long id) {
-        System.out.println("Chached getalbumbyid");
         return recordShopRepository.findById(id);
     }
 
