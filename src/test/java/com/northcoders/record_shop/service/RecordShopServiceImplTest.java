@@ -1,13 +1,16 @@
 package com.northcoders.record_shop.service;
 
+import com.northcoders.record_shop.repository.AlbumSpecifications;
 import com.northcoders.record_shop.repository.RecordShopRepository;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.northcoders.record_shop.model.Album;
 import com.northcoders.record_shop.model.Genre;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,50 @@ class RecordShopServiceImplTest {
         List<Album> actualResult = recordShopService.getAllAlbums(null, null, null);
 
         assertThat(actualResult).hasSize(5);
+        assertThat(actualResult).isEqualTo(albums);
+    }
+
+    @Test
+    public void testGetAllAlbumsByArtist(){
+        List<Album> albums = new ArrayList<>();
+        albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+        albums.add(new Album(2L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
+
+
+        when(mockRecordShopRepository.findAll(Mockito.any(Specification.class))).thenReturn(albums);
+
+        List<Album> actualResult = recordShopService.getAllAlbums("Avenged Sevenfold", null, null);
+
+        assertThat(actualResult).hasSize(2);
+        assertThat(actualResult).isEqualTo(albums);
+    }
+
+    @Test
+    public void testGetAllAlbumsByGenre(){
+        List<Album> albums = new ArrayList<>();
+        albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+        albums.add(new Album(2L, "Nightmare", "Avenged Sevenfold", 2010, Genre.METAL, 10));
+
+
+        when(mockRecordShopRepository.findAll(Mockito.any(Specification.class))).thenReturn(albums);
+
+        List<Album> actualResult = recordShopService.getAllAlbums(null, Genre.METAL, null);
+
+        assertThat(actualResult).hasSize(2);
+        assertThat(actualResult).isEqualTo(albums);
+    }
+
+    @Test
+    public void testGetAllAlbumsByYear(){
+        List<Album> albums = new ArrayList<>();
+        albums.add(new Album(1L, "Avenged Sevenfold", "Avenged Sevenfold", 2007, Genre.METAL, 10));
+
+
+        when(mockRecordShopRepository.findAll(Mockito.any(Specification.class))).thenReturn(albums);
+
+        List<Album> actualResult = recordShopService.getAllAlbums(null, null, 2007);
+
+        assertThat(actualResult).hasSize(1);
         assertThat(actualResult).isEqualTo(albums);
     }
 
