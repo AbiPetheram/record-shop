@@ -1,6 +1,7 @@
 package com.northcoders.record_shop.controller;
 
 import com.northcoders.record_shop.model.Album;
+import com.northcoders.record_shop.model.Genre;
 import com.northcoders.record_shop.service.RecordShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,13 +24,11 @@ public class RecordShopController {
 
     @GetMapping
     @Cacheable("getAllAlbumCache")
-    public ResponseEntity<List<Album>> getAllAlbums(@RequestParam(required = false) String artist){
+    public ResponseEntity<List<Album>> getAllAlbums(@RequestParam(required = false) String artist,
+                                                    @RequestParam(required = false) Genre genre,
+                                                    @RequestParam(required = false) Integer year){
         List<Album> albums = new ArrayList<>();
-        if(artist != null){
-            albums = recordShopService.getAllAlbumsByArtist(artist);
-        } else{
-            albums = recordShopService.getAllAlbums();
-        }
+        albums = recordShopService.getAllAlbums(artist, genre, year);
         return new ResponseEntity<>(albums, HttpStatus.OK);
     }
 
