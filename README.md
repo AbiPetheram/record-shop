@@ -102,4 +102,14 @@ Alternatively, to run using a docker container, type the following commands in s
 ``-t record-shop:1.0 .``
 ``docker run -p 8080:8080 record-shop:1.0``
 
+## Future considerations
+
+This is a continuously developing application which has started at a basic level and will continue to develop.
+
+The next steps will be:
+
+* Add an inventory management system so that stock is no longer a property of Album
+* Add an artist class to contain all information about the artist
+* Add artwork property to Album so that images can be displayed in a front end application
+
 
